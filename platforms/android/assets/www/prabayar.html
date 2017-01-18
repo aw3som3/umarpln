@@ -128,19 +128,3 @@
     </div>
 </div>
 
-<script>
-	document.getElementById("photobutton").addEventListener("click", capturePhoto);	
-
-function capturePhoto(){
-	navigator.camera.getPicture(onSuccess, onFail, { quality: 50 });
-}
-
-function onSuccess(imageData) {
-    $("#imgready").html("<img src='data:image/jpeg;base64,"+imageData+"'>")
-    //image.src = "data:image/jpeg;base64," + imageData;
-}
-function onFail(message) {
-    alert('Failed because: ' + message);
-}
-
-</script>

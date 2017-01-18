@@ -21,6 +21,7 @@ $$(document).on('deviceready', function() {
 });
 
 function capturePhoto(){
+	console.log("test");
 	navigator.camera.getPicture(onSuccess, onFail, { quality: 50 });
 }
 
@@ -46,7 +47,7 @@ myApp.onPageInit('about', function (page) {
 $$(document).on('pageInit', function (e) {
     // Get page data from event data
     var page = e.detail.page;
-
+	console.log("prabayar");
     if (page.name === 'prabayar') {
         $("#photobutton").click(capturePhoto);
     }
