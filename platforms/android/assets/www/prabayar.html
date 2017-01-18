@@ -1,0 +1,146 @@
+<!-- We don't need a full layout in this file because this page will be parsed with Ajax. -->
+
+<!-- Top Navbar-->
+<div class="navbar">
+    <div class="navbar-inner">
+        <div class="left">
+            <a href="#" class="back link">
+                <i class="icon icon-back"></i>
+                <span>Back</span>
+            </a>
+        </div>
+        <div class="center sliding">Gangguan Prabayar</div>
+        <div class="right">
+            <a href="#" class="link icon-only open-panel"><i class="icon icon-bars"></i></a>
+        </div>
+    </div>
+</div>
+<div class="pages">
+    <div data-page="prabayar" class="page">
+        <div class="page-content">
+            <div class="content-block">
+                <div class="list-block">
+				  <ul>
+					<li>
+					  <div class="item-content">
+						
+						<div class="item-inner">
+						  <div class="item-title label">Id</div>
+						  <div class="item-input">
+							  <input type="text" name="id_pelanggan" placeholder="id pelanggan">
+						  </div>
+						</div>
+					  </div>
+					</li>
+					
+					<li>
+					  <div class="item-content">
+						
+						<div class="item-inner">
+						  <div class="item-title label">Nama</div>
+						  <div class="item-input">
+							  <input type="text" name="nama"  placeholder="nama pelanggan">
+						  </div>
+						</div>
+					  </div>
+					</li>
+					
+					<li>
+					  <div class="item-content">
+						
+						<div class="item-inner">
+						  <div class="item-title label">Alamat</div>
+						  <div class="item-input">
+							  <input type="text" name="alamat"  placeholder="alamat">
+						  </div>
+						</div>
+					  </div>
+					</li>
+					
+					<li>
+					  <div class="item-content">
+						
+						<div class="item-inner">
+						  <div class="item-title label">Daya</div>
+						  <div class="item-input">
+							  <input type="text" name="daya"  placeholder="daya">
+						  </div>
+						</div>
+					  </div>
+					</li>
+					
+					<li>
+					  <div class="item-content">
+						
+						<div class="item-inner">
+						  <div class="item-title label">No Meter</div>
+						  <div class="item-input">
+							  <input type="text" name="no_meter"  placeholder="nomor meter">
+						  </div>
+						</div>
+					  </div>
+					</li>
+					
+					<li>
+					  <div class="item-content">
+						
+						<div class="item-inner">
+						  <div class="item-title label">Merk Meter</div>
+						  <div class="item-input">
+							  <input type="text" name="merk_meter"  placeholder="merk meter">
+						  </div>
+						</div>
+					  </div>
+					</li>
+					
+					<li>
+					  <div class="item-content">
+						
+						<div class="item-inner">
+						  <div class="item-title label">Tanggal Rusak</div>
+						  <div class="item-input">
+							  <input type="date" name="tanggal_rusak">
+						  </div>
+						</div>
+					  </div>
+					</li>
+					<li>
+					  <div class="item-content">
+						
+						<div class="item-inner">
+						  <div class="item-title label">Keterangan</div>
+						  <div class="item-input">
+							  <input type="text" name="keterangan">
+						  </div>
+						</div>
+					  </div>
+					</li>
+				  </ul>
+				</div> 
+				<div id="photo">
+					<button id="photobutton" class="button button-big button-fill color-green circle button-center"><i class="fa fa-lg fa-camera"></i></button>
+					<p>Tambah Foto</p>
+					<div id="imgready"></div>
+					
+				</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+	document.getElementById("photobutton").addEventListener("click", capturePhoto);	
+
+function capturePhoto(){
+	navigator.camera.getPicture(onSuccess, onFail, { quality: 50 });
+}
+
+function onSuccess(imageData) {
+    $("#imgready").html("<img src='data:image/jpeg;base64,"+imageData+"'>")
+    //image.src = "data:image/jpeg;base64," + imageData;
+}
+function onFail(message) {
+    alert('Failed because: ' + message);
+}
+
+</script>
