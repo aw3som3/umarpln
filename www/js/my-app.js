@@ -14,7 +14,23 @@ var mainView = myApp.addView('.view-main', {
 // Handle Cordova Device Ready Event
 $$(document).on('deviceready', function() {
     console.log("Device is ready!");
+	
+	$(document).ready(function (){
+        console.log("jquery ready");
+    });	
 });
+
+function capturePhoto(){
+	navigator.camera.getPicture(onSuccess, onFail, { quality: 50 });
+}
+
+function onSuccess(imageData) {
+	$("#imgready").html("<img style='width:100px;height:100px' src='data:image/jpeg;base64,"+imageData+"'>")
+	//image.src = "data:image/jpeg;base64," + imageData;
+}
+function onFail(message) {
+	alert('Failed because: ' + message);
+}
 
 
 
@@ -31,14 +47,13 @@ $$(document).on('pageInit', function (e) {
     // Get page data from event data
     var page = e.detail.page;
 
-    if (page.name === 'about') {
-        // Following code will be executed for page with data-page attribute equal to "about"
-        myApp.alert('Here comes About page');
+    if (page.name === 'prabayar') {
+        $("#photobutton").click(capturePhoto);
     }
 })
 
 // Option 2. Using live 'pageInit' event handlers for each page
 $$(document).on('pageInit', '.page[data-page="about"]', function (e) {
     // Following code will be executed for page with data-page attribute equal to "about"
-    myApp.alert('Here comes About page');
+    
 })
