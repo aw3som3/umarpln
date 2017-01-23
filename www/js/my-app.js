@@ -42,7 +42,7 @@ function uploadImage(id,imgUri){
 	var params = new Object();
     options.params = params;
     var ft = new FileTransfer();
-    ft.upload(imageURI, encodeURI("http://192.168.43.81/plnumar/index.php/c_gangguan/upload_img"), win, fail, options);
+    ft.upload(imgUri, encodeURI("http://gamerspace.us/index.php/c_gangguan/upload_img"), win, fail, options);
 }
 function win(r){
 	console.log(r);
