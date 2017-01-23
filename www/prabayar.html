@@ -27,6 +27,7 @@
 						<div class="item-inner">
 						  <div class="item-title label">Id</div>
 						  <div class="item-input">
+							  <input type="hidden" name="prapasca" value="prabayar">
 							  <input type="text" name="id_pelanggan" placeholder="id pelanggan">
 						  </div>
 						</div>
@@ -104,6 +105,22 @@
 						</div>
 					  </div>
 					</li>
+					
+					<li>
+					  <div class="item-content">
+						
+						<div class="item-inner">
+						  <div class="item-title label">Jenis Kerusakan</div>
+						  <div class="item-input">
+							  <select name="jenis_kerusakan">
+									<option value="KCT tidak Dapat Masuk">KCT tidak Dapat Masuk</option>
+									<option value="Token tidak Bisa Masuk">Token tidak Bisa Masuk</option>
+							  </select>
+						  </div>
+						</div>
+					  </div>
+					</li>
+					
 					<li>
 					  <div class="item-content">
 						
@@ -117,12 +134,23 @@
 					</li>
 				  </ul>
 				</div> 
-				<div id="photo">
-					<button id="photobutton" class="button button-big button-fill color-green circle button-center"><i class="fa fa-lg fa-camera"></i></button>
-					<p>Tambah Foto</p>
-					<div id="imgready"></div>
-					
+				<div id="photo" class="center">
+					<p>Foto Meter</p>
+					<div id="imgready">
+						<img src="/img/default-image.png" height="100%">
+					</div>
 				</div>
+				
+				<div class="content-block">
+					<div class="row">
+						<div class="col-50 center">
+							<a href="#" class="button button-big button-fill color-green button-center">SIMPAN</a>
+						</div>
+						<div class="col-50 center">
+							<a href="#" class="button button-big button-fill color-green button-center">KIRIM</a>
+						</div>
+					</div>
+				</div>	
             </div>
         </div>
     </div>

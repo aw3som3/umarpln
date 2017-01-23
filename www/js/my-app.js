@@ -26,13 +26,30 @@ function capturePhoto(){
 }
 
 function onSuccess(imageData) {
-	$("#imgready").html("<img style='width:100px;height:100px' src='data:image/jpeg;base64,"+imageData+"'>")
+	console.log(imageData);
+	$("#imgready").html("<img id='imgupload' height='100%' src='"+imageData+"'>")
 	//image.src = "data:image/jpeg;base64," + imageData;
 }
 function onFail(message) {
 	alert('Failed because: ' + message);
 }
-
+function uploadImage(id,imgUri){
+	var options = new FileUploadOptions();
+	options.fileKey = "file";
+	options.fileName = id+".png";
+	options.mimeType = "text/plain";
+	
+	var params = new Object();
+    options.params = params;
+    var ft = new FileTransfer();
+    ft.upload(imageURI, encodeURI("http://192.168.43.81/plnumar/index.php/c_gangguan/upload_img"), win, fail, options);
+}
+function win(r){
+	console.log(r);
+}
+function fail(e){
+	console.log(e);
+}
 
 
 // Now we need to run the code that will be executed only for About page.
@@ -49,7 +66,12 @@ $$(document).on('pageInit', function (e) {
     var page = e.detail.page;
 	console.log("prabayar");
     if (page.name === 'prabayar') {
-        $("#photobutton").click(capturePhoto);
+        $("#imgready").click(capturePhoto);
+		$("#kirim").click(function(){
+			var id = "asdfgkj";
+			var imageUri = $("#imgupload").attr("src");
+			uploadImage(id,imageUri);
+		});
     }
 })
 

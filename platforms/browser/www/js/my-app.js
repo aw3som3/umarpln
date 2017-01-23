@@ -21,11 +21,13 @@ $$(document).on('deviceready', function() {
 });
 
 function capturePhoto(){
+	console.log("test");
 	navigator.camera.getPicture(onSuccess, onFail, { quality: 50 });
 }
 
 function onSuccess(imageData) {
-	$("#imgready").html("<img style='width:100px;height:100px' src='data:image/jpeg;base64,"+imageData+"'>")
+	console.log(imageData);
+	$("#imgready").html("<img style='width:100px;height:100px' src='"+imageData+"'>")
 	//image.src = "data:image/jpeg;base64," + imageData;
 }
 function onFail(message) {
@@ -46,7 +48,7 @@ myApp.onPageInit('about', function (page) {
 $$(document).on('pageInit', function (e) {
     // Get page data from event data
     var page = e.detail.page;
-
+	console.log("prabayar");
     if (page.name === 'prabayar') {
         $("#photobutton").click(capturePhoto);
     }
