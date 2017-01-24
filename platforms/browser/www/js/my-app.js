@@ -1,6 +1,9 @@
 // Initialize app
 var myApp = new Framework7();
 
+var uuidUsed = "";
+var loadFromFile = false;
+
 
 // If we need to use custom DOM library, let's save it to $$ variable:
 var $$ = Dom7;
@@ -27,13 +30,60 @@ function capturePhoto(){
 
 function onSuccess(imageData) {
 	console.log(imageData);
-	$("#imgready").html("<img style='width:100px;height:100px' src='"+imageData+"'>")
+	$("#imgready").html("<img id='imgupload' height='100%' src='"+imageData+"'>")
 	//image.src = "data:image/jpeg;base64," + imageData;
 }
 function onFail(message) {
 	alert('Failed because: ' + message);
 }
+function sendDataProblem(type){
+	var imgUri = $("#imgupload").attr("src");
+	var options = new FileUploadOptions();
+	var ext = imgUri.split(".").pop();
+	options.fileKey = "file";
+	options.fileName = id+"."+ext;
+	options.mimeType = "text/plain";
+	var params = getDataProblem(type);
+    options.params = params;
+    var ft = new FileTransfer();
+    ft.upload(imgUri, encodeURI("http://gamerspace.us/index.php/c_gangguan/upload_img"), win, fail, options);
+}
 
+function getDataProblem(type){
+	var obj = new Object();
+	obj.id = uuidUsed;
+	obj.pra_pasca = type;
+	obj.id_pelanggan = $("input[name='id_pelanggan']").val();
+	obj.nama = $("input[name='nama']").val();
+	obj.alamat = $("input[name='alamat']").val();
+	obj.daya = $("input[name='daya']").val();
+	obj.no_meter = $("input[name='no_meter']").val();
+	obj.merk_meter = $("input[name='merk_meter']").val();
+	obj.tanggal_rusak = $("input[name='tanggal_rusak']").val();
+	obj.jenis_kerusakan = $("input[name='jenis_kerusakan']").val();
+	obj.keterangan = $("input[name='keterangan']").val();
+	return obj;
+}
+
+function generateUUID(){
+    var d = new Date().getTime();
+    if(window.performance && typeof window.performance.now === "function"){
+        d += performance.now(); //use high-precision timer if available
+    }
+    var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+        var r = (d + Math.random()*16)%16 | 0;
+        d = Math.floor(d/16);
+        return (c=='x' ? r : (r&0x3|0x8)).toString(16);
+    });
+    return uuid;
+}
+
+function win(r){
+	console.log(r);
+}
+function fail(e){
+	console.log(e);
+}
 
 
 // Now we need to run the code that will be executed only for About page.
@@ -50,7 +100,22 @@ $$(document).on('pageInit', function (e) {
     var page = e.detail.page;
 	console.log("prabayar");
     if (page.name === 'prabayar') {
-        $("#photobutton").click(capturePhoto);
+		if(!loadFromFile){
+			uuidUsed = generateUUID();
+		}
+        $("#imgready").click(capturePhoto);
+		$("#kirim").click(function(){
+			sendDataProblem("prabayar");
+		});
+    }
+	if (page.name === 'pascabayar') {
+		if(!loadFromFile){
+			uuidUsed = generateUUID();
+		}
+        $("#imgready").click(capturePhoto);
+		$("#kirim").click(function(){
+			sendDataProblem("pascabayar");
+		});
     }
 })
 
