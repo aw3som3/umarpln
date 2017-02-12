@@ -277,14 +277,14 @@ $$(document).on('pageBeforeAnimation', function (e) {
 	}
 	if(page.name === 'tindakan'){
 		
-		$("#imgready").click(function(){
+		$("#imgready2").click(function(){
 			capturePhoto("tindakan");
 		});
 		
-		$("#simpan").click(function(){
+		$("#simpan2").click(function(){
 			saveDataTindakan();
 		});
-		$("#kirim").click(function(){
+		$("#kirim2").click(function(){
 			sendDataTindakan();
 		});
 	}
