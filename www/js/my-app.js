@@ -3,6 +3,7 @@ var myApp = new Framework7();
 
 var uuidUsed = "";
 var loadFromFile = false;
+var dataSaved = [];
 
 
 // If we need to use custom DOM library, let's save it to $$ variable:
@@ -20,6 +21,7 @@ $$(document).on('deviceready', function() {
 	
 	$(document).ready(function (){
         console.log("jquery ready");
+		dataSaved = localStorage.dataSaved;
     });	
 });
 
@@ -41,12 +43,40 @@ function sendDataProblem(type){
 	var options = new FileUploadOptions();
 	var ext = imgUri.split(".").pop();
 	options.fileKey = "file";
-	options.fileName = id+"."+ext;
+	options.fileName = type+"_"+uuidUsed+"."+ext;
 	options.mimeType = "text/plain";
 	var params = getDataProblem(type);
     options.params = params;
     var ft = new FileTransfer();
     ft.upload(imgUri, encodeURI("http://gamerspace.us/index.php/c_gangguan/upload_img"), win, fail, options);
+}
+function saveDataProblem(type){
+	var params = getDataProblem(type);
+	var imgUri = $("#imgupload").attr("src");
+	var data = {
+		params:params,
+		imgUri:imgUri
+	};
+	dataSaved.push(data);
+	localStorage.dataSaved = dataSaved;
+}
+function loadFromFile(){
+	for(var i=0;i<dataSaved.length;i++){
+		if(dataSaved[i].params.uuid==uuidUsed){
+			var obj = dataSaved[i].params;
+			$("input[name='id_pelanggan']").val(obj.id_pelanggan);
+			$("input[name='nama']").val(obj.nama);
+			$("input[name='alamat']").val(obj.alamat);
+			$("input[name='daya']").val(obj.daya);
+			$("input[name='no_meter']").val(obj.no_meter);
+			$("input[name='merk_meter']").val(obj.merk_meter);
+			$("input[name='tanggal_rusak']").val(obj.tanggal_rusak);
+			$("input[name='jenis_kerusakan']").val(obj.jenis_kerusakan);
+			$("input[name='keterangan']").val(obj.keterangan);
+			break;
+		}
+	}
+	$("#imgupload").attr("src",dataSaved[i].imgUri);
 }
 
 function getDataProblem(type){
@@ -60,7 +90,7 @@ function getDataProblem(type){
 	obj.no_meter = $("input[name='no_meter']").val();
 	obj.merk_meter = $("input[name='merk_meter']").val();
 	obj.tanggal_rusak = $("input[name='tanggal_rusak']").val();
-	obj.jenis_kerusakan = $("input[name='jenis_kerusakan']").val();
+	obj.jenis_kerusakan = $("select[name='jenis_kerusakan']").val();
 	obj.keterangan = $("input[name='keterangan']").val();
 	return obj;
 }
@@ -99,24 +129,45 @@ $$(document).on('pageInit', function (e) {
     // Get page data from event data
     var page = e.detail.page;
 	console.log("prabayar");
+	if(page.name === 'index'){
+		loadFromFile = false;
+	}
     if (page.name === 'prabayar') {
 		if(!loadFromFile){
 			uuidUsed = generateUUID();
+		}else{
+			uuidUsed = page.query.id;
+			loadFromFile();
 		}
         $("#imgready").click(capturePhoto);
 		$("#kirim").click(function(){
 			sendDataProblem("prabayar");
 		});
+		$("#simpan").click(function(){
+			saveDataProblem("prabayar")
+		});
     }
 	if (page.name === 'pascabayar') {
 		if(!loadFromFile){
 			uuidUsed = generateUUID();
+		}else{
+			uuidUsed = page.query.id;
+			loadFromFile();
 		}
         $("#imgready").click(capturePhoto);
 		$("#kirim").click(function(){
 			sendDataProblem("pascabayar");
 		});
+		$("#simpan").click(function(){
+			saveDataProblem("pascabayar")
+		});
     }
+	if(page.name === 'tersimpan'){
+		loadFromFile = true;
+		for(var i=0;i<dataSaved.length;i++){
+			$("#saved").append("<a href='"+dataSaved[i].params.pra_pasca+".html?id="+dataSaved[i].params.id+"'><li class='item-content' id='"+dataSaved[i].params.id+"'>"+dataSaved[i].params.id_pelanggan+"</li>");
+		}
+	}
 })
 
 // Option 2. Using live 'pageInit' event handlers for each page
