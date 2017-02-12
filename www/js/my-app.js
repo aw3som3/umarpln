@@ -60,7 +60,7 @@ function saveDataProblem(type){
 	dataSaved.push(data);
 	localStorage.dataSaved = dataSaved;
 }
-function loadFromFile(){
+function loadDataFromFile(){
 	for(var i=0;i<dataSaved.length;i++){
 		if(dataSaved[i].params.uuid==uuidUsed){
 			var obj = dataSaved[i].params;
@@ -137,7 +137,7 @@ $$(document).on('pageInit', function (e) {
 			uuidUsed = generateUUID();
 		}else{
 			uuidUsed = page.query.id;
-			loadFromFile();
+			loadDataFromFile();
 		}
         $("#imgready").click(capturePhoto);
 		$("#kirim").click(function(){
@@ -152,7 +152,7 @@ $$(document).on('pageInit', function (e) {
 			uuidUsed = generateUUID();
 		}else{
 			uuidUsed = page.query.id;
-			loadFromFile();
+			loadDataFromFile();
 		}
         $("#imgready").click(capturePhoto);
 		$("#kirim").click(function(){
