@@ -6,6 +6,7 @@ var loadFromFile = false;
 var dataSaved = [];
 var dataDownloaded = [];
 var dataSavedTindakan = [];
+var imgAct="gangguan";
 
 // If we need to use custom DOM library, let's save it to $$ variable:
 var $$ = Dom7;
@@ -29,15 +30,20 @@ $$(document).on('deviceready', function() {
     });	
 });
 
-function capturePhoto(){
+function capturePhoto(type){
+	imgAct=type;
 	console.log("test");
 	navigator.camera.getPicture(onSuccess, onFail, { quality: 50 });
 }
 
 function onSuccess(imageData) {
 	console.log(imageData);
-	$("#imgready").html("<img id='imgupload' height='100%' src='"+imageData+"'>");
-	//image.src = "data:image/jpeg;base64," + imageData;
+	if(imgAct==="gangguan")
+		$("#imgready").html("<img id='imgupload' height='100%' src='"+imageData+"'>");
+	
+	if(imgAct==="tindakan")
+		$("#imgready").html("<img id='imgupload2' height='100%' src='"+imageData+"'>");
+	
 }
 function onFail(message) {
 	alert('Failed because: ' + message);
@@ -57,7 +63,7 @@ function sendDataProblem(type){
 }
 function sendDataTindakan(){
 	myApp.popup('.popup-loading');
-	var imgUri = $("#imgupload").attr("src");
+	var imgUri = $("#imgupload2").attr("src");
 	var options = new FileUploadOptions();
 	var ext = imgUri.split(".").pop();
 	options.fileKey = "file";
@@ -235,7 +241,9 @@ $$(document).on('pageBeforeAnimation', function (e) {
 			uuidUsed = page.query.id;
 			loadDataFromFile();
 		}
-        $("#imgready").click(capturePhoto);
+        $("#imgready").click(function(){
+			capturePhoto("gangguan");
+		});
 		$("#kirim").click(function(){
 			sendDataProblem("prabayar");
 		});
@@ -250,7 +258,9 @@ $$(document).on('pageBeforeAnimation', function (e) {
 			uuidUsed = page.query.id;
 			loadDataFromFile();
 		}
-        $("#imgready").click(capturePhoto);
+        $("#imgready").click(function(){
+			capturePhoto("gangguan");
+		});
 		$("#kirim").click(function(){
 			sendDataProblem("pascabayar");
 		});
@@ -267,7 +277,9 @@ $$(document).on('pageBeforeAnimation', function (e) {
 	}
 	if(page.name === 'tindakan'){
 		
-		$("#imgready").click(capturePhoto);
+		$("#imgready").click(function(){
+			capturePhoto("tindakan");
+		});
 		
 		$("#simpan").click(function(){
 			saveDataTindakan();
