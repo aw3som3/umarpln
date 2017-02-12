@@ -21,7 +21,8 @@ $$(document).on('deviceready', function() {
 	
 	$(document).ready(function (){
         console.log("jquery ready");
-		dataSaved = localStorage.dataSaved;
+		if(localStorage.dataSaved!==undefined)
+		dataSaved = JSON.parse(localStorage.dataSaved);
     });	
 });
 
@@ -58,11 +59,13 @@ function saveDataProblem(type){
 		imgUri:imgUri
 	};
 	dataSaved.push(data);
-	localStorage.dataSaved = dataSaved;
+	localStorage.dataSaved = JSON.stringify(dataSaved);
+	myApp.closeModal(".popup-loading");
+	alert("sukses tersimpan");
 }
 function loadDataFromFile(){
 	for(var i=0;i<dataSaved.length;i++){
-		if(dataSaved[i].params.uuid==uuidUsed){
+		if(dataSaved[i].params.id===uuidUsed){
 			var obj = dataSaved[i].params;
 			$("input[name='id_pelanggan']").val(obj.id_pelanggan);
 			$("input[name='nama']").val(obj.nama);
@@ -73,10 +76,11 @@ function loadDataFromFile(){
 			$("input[name='tanggal_rusak']").val(obj.tanggal_rusak);
 			$("input[name='jenis_kerusakan']").val(obj.jenis_kerusakan);
 			$("input[name='keterangan']").val(obj.keterangan);
+			$("#imgupload").attr("src",dataSaved[i].imgUri);
 			break;
 		}
 	}
-	$("#imgupload").attr("src",dataSaved[i].imgUri);
+	
 }
 
 function getDataProblem(type){
@@ -110,9 +114,13 @@ function generateUUID(){
 
 function win(r){
 	console.log(r);
+	myApp.closeModal(".popup-loading");
+	alert("sukses terkirim");
 }
 function fail(e){
 	console.log(e);
+	myApp.closeModal(".popup-loading");
+	alert("gagal terkirim");
 }
 
 
@@ -125,10 +133,10 @@ myApp.onPageInit('about', function (page) {
 })
 
 // Option 2. Using one 'pageInit' event handler for all pages:
-$$(document).on('pageInit', function (e) {
+$$(document).on('pageBeforeAnimation', function (e) {
     // Get page data from event data
     var page = e.detail.page;
-	console.log("prabayar");
+	console.log(page);
 	if(page.name === 'index'){
 		loadFromFile = false;
 	}
@@ -141,9 +149,11 @@ $$(document).on('pageInit', function (e) {
 		}
         $("#imgready").click(capturePhoto);
 		$("#kirim").click(function(){
+			myApp.popup('.popup-loading');
 			sendDataProblem("prabayar");
 		});
 		$("#simpan").click(function(){
+			myApp.popup('.popup-loading');
 			saveDataProblem("prabayar")
 		});
     }
@@ -156,14 +166,17 @@ $$(document).on('pageInit', function (e) {
 		}
         $("#imgready").click(capturePhoto);
 		$("#kirim").click(function(){
+			myApp.popup('.popup-loading');
 			sendDataProblem("pascabayar");
 		});
 		$("#simpan").click(function(){
+			myApp.popup('.popup-loading');
 			saveDataProblem("pascabayar")
 		});
     }
 	if(page.name === 'tersimpan'){
 		loadFromFile = true;
+		$("#saved").html("");
 		for(var i=0;i<dataSaved.length;i++){
 			$("#saved").append("<a href='"+dataSaved[i].params.pra_pasca+".html?id="+dataSaved[i].params.id+"'><li class='item-content' id='"+dataSaved[i].params.id+"'>"+dataSaved[i].params.id_pelanggan+"</li>");
 		}
