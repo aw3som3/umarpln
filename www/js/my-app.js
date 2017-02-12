@@ -4,7 +4,8 @@ var myApp = new Framework7();
 var uuidUsed = "";
 var loadFromFile = false;
 var dataSaved = [];
-
+var dataDownloaded = [];
+var dataSavedTindakan = [];
 
 // If we need to use custom DOM library, let's save it to $$ variable:
 var $$ = Dom7;
@@ -22,7 +23,9 @@ $$(document).on('deviceready', function() {
 	$(document).ready(function (){
         console.log("jquery ready");
 		if(localStorage.dataSaved!==undefined)
-		dataSaved = JSON.parse(localStorage.dataSaved);
+			dataSaved = JSON.parse(localStorage.dataSaved);
+		if(localStorage.dataSavedTindakan!==undefined)
+			dataSavedTindakan = JSON.parse(localStorage.dataSavedTindakan);
     });	
 });
 
@@ -33,13 +36,14 @@ function capturePhoto(){
 
 function onSuccess(imageData) {
 	console.log(imageData);
-	$("#imgready").html("<img id='imgupload' height='100%' src='"+imageData+"'>")
+	$("#imgready").html("<img id='imgupload' height='100%' src='"+imageData+"'>");
 	//image.src = "data:image/jpeg;base64," + imageData;
 }
 function onFail(message) {
 	alert('Failed because: ' + message);
 }
 function sendDataProblem(type){
+	myApp.popup('.popup-loading');
 	var imgUri = $("#imgupload").attr("src");
 	var options = new FileUploadOptions();
 	var ext = imgUri.split(".").pop();
@@ -51,7 +55,21 @@ function sendDataProblem(type){
     var ft = new FileTransfer();
     ft.upload(imgUri, encodeURI("http://gamerspace.us/index.php/c_gangguan/upload_img"), win, fail, options);
 }
+function sendDataTindakan(){
+	myApp.popup('.popup-loading');
+	var imgUri = $("#imgupload").attr("src");
+	var options = new FileUploadOptions();
+	var ext = imgUri.split(".").pop();
+	options.fileKey = "file";
+	options.fileName = "tindakan_"+uuidUsed+"."+ext;
+	options.mimeType = "text/plain";
+	var params = getDataTindakan();
+    options.params = params;
+    var ft = new FileTransfer();
+    ft.upload(imgUri, encodeURI("http://gamerspace.us/index.php/c_tindakan/upload_img"), win, fail, options);
+}
 function saveDataProblem(type){
+	myApp.popup('.popup-loading');
 	var params = getDataProblem(type);
 	var imgUri = $("#imgupload").attr("src");
 	var data = {
@@ -63,6 +81,20 @@ function saveDataProblem(type){
 	myApp.closeModal(".popup-loading");
 	alert("sukses tersimpan");
 }
+function saveDataTindakan(){
+	myApp.popup('.popup-loading');
+	var params = getDataTindakan();
+	var imgUri = $("#imgupload").attr("src");
+	var data = {
+		params:params,
+		imgUri:imgUri
+	};
+	dataSavedTindakan.push(data);
+	localStorage.dataSavedTindakan = JSON.stringify(dataSavedTindakan);
+	myApp.closeModal(".popup-loading");
+	alert("sukses tersimpan");
+}
+
 function loadDataFromFile(){
 	for(var i=0;i<dataSaved.length;i++){
 		if(dataSaved[i].params.id===uuidUsed){
@@ -76,13 +108,18 @@ function loadDataFromFile(){
 			$("input[name='tanggal_rusak']").val(obj.tanggal_rusak);
 			$("input[name='jenis_kerusakan']").val(obj.jenis_kerusakan);
 			$("input[name='keterangan']").val(obj.keterangan);
-			$("#imgupload").attr("src",dataSaved[i].imgUri);
+			$("#imgready").html("<img id='imgupload' height='100%' src='"+dataSaved[i].imgUri+"'>");
 			break;
 		}
 	}
 	
 }
-
+function getDataTindakan(){
+	var obj = new Object();
+	obj.id = uuidUsed;
+	obj.tindakan = $("input[name='tindakan']").val();
+	return obj;
+}
 function getDataProblem(type){
 	var obj = new Object();
 	obj.id = uuidUsed;
@@ -123,6 +160,57 @@ function fail(e){
 	alert("gagal terkirim");
 }
 
+function downloadData(){
+	myApp.popup('.popup-loading');
+	var datemin = $("input[name='datemin']").val();
+	var datemax = $("input[name='datemax']").val();
+	var jqxhr = $.get( "http://gamerspace.us/index.php/c_gangguan/get_gangguan_download/"+datemin+"/"+datemax, function() {
+		
+	})
+	.done(function(data) {
+		dataDownloaded = data;
+		myApp.closeModal(".popup-loading");
+		$("#downloaded").html("");
+		for(var i=0;i<data.length;i++){
+			$("#downloaded").append("<a href='resume.html?id="+data[i].id+"'><li class='item-content' id='"+data[i].id+"'>"+data[i].id_pelanggan+"</li>");
+		}
+	})
+	.fail(function() {
+		alert( "error" );
+	})
+}
+function previewData(id){
+	for(var i=0;i<dataDownloaded.length;i++){
+		if(dataDownloaded[i].id===id){
+			var obj = dataDownloaded[i];
+			var str = ""
+			+"tipe = "+obj.pra_pasca
+			+"<br/>id_pelanggan =   "+obj.id_pelanggan
+			+"<br/>nama = "+obj.nama
+			+"<br/>alamat = "+obj.alamat
+			+"<br/>daya = "+obj.daya
+			+"<br/>no_meter = "+obj.no_meter
+			+"<br/>merk_meter = "+obj.merk_meter
+			+"<br/>tanggal_rusak = "+obj.tanggal_rusak
+			+"<br/>jenis_kerusakan = "+obj.jenis_kerusakan
+			+"<br/>keterangan = "+obj.keterangan
+			+"<br/>tindakan = "+obj.tindakan
+			+"<div class='row'>"
+			+"<div id='img_problem' class='col-50 center'>"
+			+"<p>problem</p>"
+			+"<img style='width:100%' src='http://www.gamerspace.us/img/"+obj.pra_pasca+"_"+obj.id+".jpg'>"
+			+"</div>"
+			+"<div id='img_tindakan' class='col-50 center'>"
+			+"<p>solved</p>"
+			+"<img style='width:100%' src='http://www.gamerspace.us/img/tindakan_"+obj.id+".jpg'>"
+			+"</div>"
+			+"</div>"
+			$("#itemdetail").html(str);
+			break;
+		}
+	}
+}
+
 
 // Now we need to run the code that will be executed only for About page.
 
@@ -149,11 +237,9 @@ $$(document).on('pageBeforeAnimation', function (e) {
 		}
         $("#imgready").click(capturePhoto);
 		$("#kirim").click(function(){
-			myApp.popup('.popup-loading');
 			sendDataProblem("prabayar");
 		});
 		$("#simpan").click(function(){
-			myApp.popup('.popup-loading');
 			saveDataProblem("prabayar")
 		});
     }
@@ -166,11 +252,9 @@ $$(document).on('pageBeforeAnimation', function (e) {
 		}
         $("#imgready").click(capturePhoto);
 		$("#kirim").click(function(){
-			myApp.popup('.popup-loading');
 			sendDataProblem("pascabayar");
 		});
 		$("#simpan").click(function(){
-			myApp.popup('.popup-loading');
 			saveDataProblem("pascabayar")
 		});
     }
@@ -181,6 +265,25 @@ $$(document).on('pageBeforeAnimation', function (e) {
 			$("#saved").append("<a href='"+dataSaved[i].params.pra_pasca+".html?id="+dataSaved[i].params.id+"'><li class='item-content' id='"+dataSaved[i].params.id+"'>"+dataSaved[i].params.id_pelanggan+"</li>");
 		}
 	}
+	if(page.name === 'tindakan'){
+		$("#simpan").click(function(){
+			saveDataTindakan();
+		});
+		$("#kirim").click(function(){
+			sendDataTindakan();
+		});
+	}
+	if(page.name === 'download'){
+		$("#download").click(function(){
+			downloadData();
+		});
+	}
+	if(page.name === 'resume'){
+		uuidUsed = page.query.id;
+		previewData(uuidUsed);
+	}
+	
+	
 })
 
 // Option 2. Using live 'pageInit' event handlers for each page
