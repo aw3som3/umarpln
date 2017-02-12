@@ -42,7 +42,7 @@ function onSuccess(imageData) {
 		$("#imgready").html("<img id='imgupload' height='100%' src='"+imageData+"'>");
 	
 	if(imgAct==="tindakan")
-		$("#imgready").html("<img id='imgupload2' height='100%' src='"+imageData+"'>");
+		$("#imgready2").html("<img id='imgupload2' height='100%' src='"+imageData+"'>");
 	
 }
 function onFail(message) {
