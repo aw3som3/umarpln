@@ -266,6 +266,9 @@ $$(document).on('pageBeforeAnimation', function (e) {
 		}
 	}
 	if(page.name === 'tindakan'){
+		
+		$("#imgready").click(capturePhoto);
+		
 		$("#simpan").click(function(){
 			saveDataTindakan();
 		});

@@ -5,6 +5,7 @@ var uuidUsed = "";
 var loadFromFile = false;
 var dataSaved = [];
 var dataDownloaded = [];
+var dataSavedTindakan = [];
 
 // If we need to use custom DOM library, let's save it to $$ variable:
 var $$ = Dom7;
@@ -22,7 +23,9 @@ $$(document).on('deviceready', function() {
 	$(document).ready(function (){
         console.log("jquery ready");
 		if(localStorage.dataSaved!==undefined)
-		dataSaved = JSON.parse(localStorage.dataSaved);
+			dataSaved = JSON.parse(localStorage.dataSaved);
+		if(localStorage.dataSavedTindakan!==undefined)
+			dataSavedTindakan = JSON.parse(localStorage.dataSavedTindakan);
     });	
 });
 
@@ -86,8 +89,8 @@ function saveDataTindakan(){
 		params:params,
 		imgUri:imgUri
 	};
-	dataSaved.push(data);
-	localStorage.dataSavedTindakan = JSON.stringify(dataSaved);
+	dataSavedTindakan.push(data);
+	localStorage.dataSavedTindakan = JSON.stringify(dataSavedTindakan);
 	myApp.closeModal(".popup-loading");
 	alert("sukses tersimpan");
 }
@@ -181,7 +184,7 @@ function previewData(id){
 		if(dataDownloaded[i].id===id){
 			var obj = dataDownloaded[i];
 			var str = ""
-			+"<br/>tipe = "+obj.pra_pasca
+			+"tipe = "+obj.pra_pasca
 			+"<br/>id_pelanggan =   "+obj.id_pelanggan
 			+"<br/>nama = "+obj.nama
 			+"<br/>alamat = "+obj.alamat
