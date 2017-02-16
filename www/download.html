@@ -15,10 +15,21 @@
         </div>
     </div>
 </div>
+
 <div class="pages">
     <div data-page="download" class="page">
         <div class="page-content">
             <div class="content-block">
+				<div class="buttons-row">
+				  <a href="#tab1" class="tab-link active button">Gangguan</a>
+				  <a href="#tab2" class="tab-link button">Ganti Meter</a>
+				</div>
+            </div>
+			
+			<div class="tabs">
+	<div id="tab1" class="tab active">
+			
+			
                 <div class="list-block">
 				  <ul>
 					<li>
@@ -45,13 +56,55 @@
 					</li>
 				  </ul>
 				</div>
-            </div>
-			<a href="#" id="download" class="button button-big button-fill color-green button-center">DOWNLOAD</a>
+				
+				<a href="#" id="download" class="button button-big button-fill color-green button-center">DOWNLOAD</a>
 			<div class="list-block">
 			  <ul id="downloaded">
 				
 			  </ul>
 			</div>
+				
+	</div>
+	<div id="tab2" class="tab">
+			
+			
+                <div class="list-block">
+				  <ul>
+					<li>
+					  <div class="item-content">
+						<div class="item-inner">
+						  <div class="item-title label">dari tanggal</div>
+						  <div class="item-input">
+							  <input type="date" name="datemin2" placeholder="id pelanggan">
+						  </div>
+						</div>
+					  </div>
+					</li>
+					
+					<li>
+					  <div class="item-content">
+						
+						<div class="item-inner">
+						  <div class="item-title label">sampai tanggal</div>
+						  <div class="item-input">
+							  <input type="date" name="datemax2"  placeholder="nama pelanggan">
+						  </div>
+						</div>
+					  </div>
+					</li>
+				  </ul>
+				</div>
+				
+				
+				<a href="#" id="download2" class="button button-big button-fill color-green button-center">DOWNLOAD</a>
+			<div class="list-block">
+			  <ul id="downloaded2">
+				
+			  </ul>
+			</div>
+	</div>
+</div>
+			
         </div>
     </div>
 </div>

@@ -5,7 +5,9 @@ var uuidUsed = "";
 var loadFromFile = false;
 var dataSaved = [];
 var dataDownloaded = [];
+var dataDownloadedGantimeter = [];
 var dataSavedTindakan = [];
+var dataSavedGantimeter = [];
 var imgAct="gangguan";
 
 // If we need to use custom DOM library, let's save it to $$ variable:
@@ -27,6 +29,8 @@ $$(document).on('deviceready', function() {
 			dataSaved = JSON.parse(localStorage.dataSaved);
 		if(localStorage.dataSavedTindakan!==undefined)
 			dataSavedTindakan = JSON.parse(localStorage.dataSavedTindakan);
+		if(localStorage.dataSavedGantimeter!==undefined)
+			dataSavedGantimeter = JSON.parse(localStorage.dataSavedGantimeter);
     });	
 });
 
@@ -87,6 +91,47 @@ function saveDataProblem(type){
 	myApp.closeModal(".popup-loading");
 	alert("sukses tersimpan");
 }
+function saveDataGantimeter(){
+	myApp.popup('.popup-loading');
+	var params = getDataGantimeter();
+	var imgUri = $("#imgupload").attr("src");
+	var imgUri2 = $("#imgupload2").attr("src");
+	var data = {
+		params:params,
+		imgUri:imgUri,
+		imgUri2:imgUri2
+	};
+	dataSavedGantimeter.push(data);
+	localStorage.dataSavedGantimeter = JSON.stringify(dataSavedGantimeter);
+	myApp.closeModal(".popup-loading");
+	alert("sukses tersimpan");
+}
+function sendDataGantimeter(){
+	myApp.popup('.popup-loading');
+	var imgUri = $("#imgupload").attr("src");
+	var options = new FileUploadOptions();
+	var ext = imgUri.split(".").pop();
+	options.fileKey = "file";
+	options.fileName = "gantimeter1_"+uuidUsed+"."+ext;
+	options.mimeType = "text/plain";
+	var params = getDataGantimeter();
+    options.params = params;
+    var ft = new FileTransfer();
+    ft.upload(imgUri, encodeURI("http://gamerspace.us/index.php/c_penggantian/upload_img"), uploadFoto2, fail, options);
+}
+function uploadFoto2(){
+	myApp.popup('.popup-loading');
+	var imgUri = $("#imgupload2").attr("src");
+	var options = new FileUploadOptions();
+	var ext = imgUri.split(".").pop();
+	options.fileKey = "file";
+	options.fileName = "gantimeter2_"+uuidUsed+"."+ext;
+	options.mimeType = "text/plain";
+	var params = {};
+    options.params = params;
+    var ft = new FileTransfer();
+    ft.upload(imgUri, encodeURI("http://gamerspace.us/index.php/c_penggantian/upload_img2"), win, fail, options);
+}
 function saveDataTindakan(){
 	myApp.popup('.popup-loading');
 	var params = getDataTindakan();
@@ -141,6 +186,23 @@ function getDataProblem(type){
 	obj.keterangan = $("input[name='keterangan']").val();
 	return obj;
 }
+function getDataGantimeter(){
+	var obj = new Object();
+	obj.id = uuidUsed;
+	obj.id_pelanggan = $("input[name='id_pelanggan']").val();
+	obj.nama = $("input[name='nama']").val();
+	obj.alamat = $("input[name='alamat']").val();
+	obj.daya = $("input[name='daya']").val();
+	obj.no_meter = $("input[name='no_meter_lama']").val();
+	obj.no_meter = $("input[name='no_meter_baru']").val();
+	obj.merk_meter = $("input[name='merk_meter_lama']").val();
+	obj.merk_meter = $("input[name='merk_meter_baru']").val();
+	obj.tanggal_rusak = $("input[name='tanggal_ganti']").val();
+	obj.jenis_kerusakan = $("select[name='jenis_kerusakan']").val();
+	obj.keterangan = $("input[name='keterangan']").val();
+	return obj;
+}
+
 
 function generateUUID(){
     var d = new Date().getTime();
@@ -178,13 +240,34 @@ function downloadData(){
 		myApp.closeModal(".popup-loading");
 		$("#downloaded").html("");
 		for(var i=0;i<data.length;i++){
-			$("#downloaded").append("<a href='resume.html?id="+data[i].id+"'><li class='item-content' id='"+data[i].id+"'>"+data[i].id_pelanggan+"</li>");
+			$("#downloaded").append("<a href='resume.html?id="+data[i].id+"&type=gangguan'><li class='item-content' id='"+data[i].id+"'>"+data[i].id_pelanggan+"</li>");
 		}
 	})
 	.fail(function() {
 		alert( "error" );
 	})
 }
+function downloadDataGantimeter(){
+	myApp.popup('.popup-loading');
+	var datemin = $("input[name='datemin2']").val();
+	var datemax = $("input[name='datemax2']").val();
+	var jqxhr = $.get( "http://gamerspace.us/index.php/c_penggantian/get_penggantian_download/"+datemin+"/"+datemax, function() {
+		
+	})
+	.done(function(data) {
+		dataDownloadedGantimeter = data;
+		myApp.closeModal(".popup-loading");
+		$("#downloaded2").html("");
+		for(var i=0;i<data.length;i++){
+			$("#downloaded2").append("<a href='resume.html?id="+data[i].id+"&type=gantimeter'><li class='item-content' id='"+data[i].id+"'>"+data[i].id_pelanggan+"</li>");
+		}
+	})
+	.fail(function() {
+		alert( "error" );
+	})
+}
+
+
 function previewData(id){
 	for(var i=0;i<dataDownloaded.length;i++){
 		if(dataDownloaded[i].id===id){
@@ -209,6 +292,38 @@ function previewData(id){
 			+"<div id='img_tindakan' class='col-50 center'>"
 			+"<p>solved</p>"
 			+"<img style='width:100%' src='http://www.gamerspace.us/img/tindakan_"+obj.id+".jpg'>"
+			+"</div>"
+			+"</div>"
+			$("#itemdetail").html(str);
+			break;
+		}
+	}
+}
+
+function previewDataGantimeter(id){
+	for(var i=0;i<dataDownloadedGantimeter.length;i++){
+		if(dataDownloadedGantimeter[i].id===id){
+			var obj = dataDownloadedGantimeter[i];
+			var str = ""
+			+"<br/>id_pelanggan =   "+obj.id_pelanggan
+			+"<br/>nama = "+obj.nama
+			+"<br/>alamat = "+obj.alamat
+			+"<br/>daya = "+obj.daya
+			+"<br/>no_meter_lama = "+obj.no_meter_lama
+			+"<br/>no_meter_baru = "+obj.no_meter_baru
+			+"<br/>merk_meter_lama = "+obj.merk_meter_lama
+			+"<br/>merk_meter_baru = "+obj.merk_meter_baru
+			+"<br/>tanggal_ganti = "+obj.tanggal_ganti
+			+"<br/>jenis_kerusakan = "+obj.jenis_kerusakan
+			+"<br/>keterangan = "+obj.keterangan
+			+"<div class='row'>"
+			+"<div id='img_problem' class='col-50 center'>"
+			+"<p>sebelum</p>"
+			+"<img style='width:100%' src='http://www.gamerspace.us/img/gantimeter1_"+obj.id+".jpg'>"
+			+"</div>"
+			+"<div id='img_tindakan' class='col-50 center'>"
+			+"<p>sesudah</p>"
+			+"<img style='width:100%' src='http://www.gamerspace.us/img/gantimeter2_"+obj.id+".jpg'>"
 			+"</div>"
 			+"</div>"
 			$("#itemdetail").html(str);
@@ -274,6 +389,10 @@ $$(document).on('pageBeforeAnimation', function (e) {
 		for(var i=0;i<dataSaved.length;i++){
 			$("#saved").append("<a href='"+dataSaved[i].params.pra_pasca+".html?id="+dataSaved[i].params.id+"'><li class='item-content' id='"+dataSaved[i].params.id+"'>"+dataSaved[i].params.id_pelanggan+"</li>");
 		}
+		$("#saved-gantimeter").html("");
+		for(var i=0;i<dataSavedGantimeter.length;i++){
+			$("#saved-gantimeter").append("<a href='gantimeter.html?id="+dataSavedGantimeter[i].params.id+"'><li class='item-content' id='"+dataSavedGantimeter[i].params.id+"'>"+dataSavedGantimeter[i].params.id_pelanggan+"</li>");
+		}
 	}
 	if(page.name === 'tindakan'){
 		
@@ -292,12 +411,37 @@ $$(document).on('pageBeforeAnimation', function (e) {
 		$("#download").click(function(){
 			downloadData();
 		});
+		$("#download2").click(function(){
+			downloadDataGantimeter();
+		});
 	}
 	if(page.name === 'resume'){
 		uuidUsed = page.query.id;
-		previewData(uuidUsed);
+		if(page.query.type==="gantimeter")
+			previewDataGantimeter(uuidUsed);
+		else
+			previewData(uuidUsed);
 	}
-	
+	if (page.name === 'gantimeter') {
+		if(!loadFromFile){
+			uuidUsed = generateUUID();
+		}else{
+			uuidUsed = page.query.id;
+			loadDataFromFile();
+		}
+        $("#imgready").click(function(){
+			capturePhoto("gangguan");
+		});
+		$("#imgready2").click(function(){
+			capturePhoto("tindakan");
+		});
+		$("#kirim").click(function(){
+			sendDataGantimeter();
+		});
+		$("#simpan").click(function(){
+			saveDataGantimeter()
+		});
+    }
 	
 })
 

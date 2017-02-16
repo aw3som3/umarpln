@@ -16,7 +16,7 @@
     </div>
 </div>
 <div class="pages">
-    <div data-page="prabayar" class="page">
+    <div data-page="gantimeter" class="page">
         <div class="page-content">
             <div class="content-block">
                 <div class="list-block">
@@ -137,8 +137,20 @@
 						  <div class="item-title label">Jenis Kerusakan</div>
 						  <div class="item-input">
 							  <select name="jenis_kerusakan">
-									<option value="KCT tidak Dapat Masuk">KCT tidak Dapat Masuk</option>
+									<option value="KCT tidak Dapat Masuk"> KCT tidak Dapat Masuk</option>
 									<option value="Token tidak Bisa Masuk">Token tidak Bisa Masuk</option>
+									<option value="Token Status Terpakai">Token Status Terpakai</option>
+									<option value="Keypad tidak Berfungsi">Keypad tidak Berfungsi</option>
+									<option value="Kredit kWh Tidak Berkurang">Kredit kWh Tidak Berkurang</option>
+									<option value="Kredit Berkurang tanpa Beban">Kredit Berkurang tanpa Beban</option>
+									<option value="Kredit kWh Menjadi Nol (Reset)">Kredit kWh Menjadi Nol (Reset)</option>
+									<option value="Kredit MPB bernilai Minus">Kredit MPB bernilai Minus</option>
+									<option value="Display MPB Blank/Cacat/Mati">Display MPB Blank/Cacat/Mati</option>
+									<option value="Relay / Kontaktor Rusak">Relay / Kontaktor Rusak</option>
+									<option value="Terminal kWh Terbakar">Terminal kWh Terbakar</option>
+									<option value="kWh Meter tidak keluar Tegangan">kWh Meter tidak keluar Tegangan</option>
+									<option value="Permasalahan Instalasi Pelanggan">Permasalahan Instalasi Pelanggan</option>
+									<option value="Lain-lain">Lain-lain</option>
 							  </select>
 						  </div>
 						</div>
@@ -158,20 +170,34 @@
 					</li>
 				  </ul>
 				</div> 
-				<div id="photo" class="center">
-					<p>Foto Meter</p>
-					<div id="imgready">
-						<img src="/img/default-image.png" height="100%">
+				<div class="content-block">
+					<div class="row">
+						<div class="col-50 center">
+							<div id="photo2" class="center pg">
+								<p>Foto Sebelum</p>
+								<div id="imgready">
+									<img src="/img/default-image.png" id="imgupload" width="100%">
+								</div>
+							</div>
+						</div>
+						<div class="col-50 center">
+							<div id="photo2" class="center pg">
+								<p>Foto Sesudah</p>
+								<div id="imgready2">
+									<img src="./img/default-image.png" id="imgupload2" width="100%">
+								</div>
+							</div>
+						</div>
 					</div>
 				</div>
 				
 				<div class="content-block">
 					<div class="row">
 						<div class="col-50 center">
-							<a href="#" class="button button-big button-fill color-green button-center">SIMPAN</a>
+							<a href="#" id="simpan" class="button button-big button-fill color-green button-center">SIMPAN</a>
 						</div>
 						<div class="col-50 center">
-							<a href="#" class="button button-big button-fill color-green button-center">KIRIM</a>
+							<a href="#" id="kirim" class="button button-big button-fill color-green button-center">KIRIM</a>
 						</div>
 					</div>
 				</div>	
