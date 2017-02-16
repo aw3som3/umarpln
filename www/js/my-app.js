@@ -43,10 +43,10 @@ function capturePhoto(type){
 function onSuccess(imageData) {
 	console.log(imageData);
 	if(imgAct==="gangguan")
-		$("#imgready").html("<img id='imgupload' height='100%' src='"+imageData+"'>");
+		$("#imgready").html("<img id='imgupload' width='100%' src='"+imageData+"'>");
 	
 	if(imgAct==="tindakan")
-		$("#imgready2").html("<img id='imgupload2' height='100%' src='"+imageData+"'>");
+		$("#imgready2").html("<img id='imgupload2' width='100%' src='"+imageData+"'>");
 	
 }
 function onFail(message) {
@@ -159,7 +159,7 @@ function loadDataFromFile(){
 			$("input[name='tanggal_rusak']").val(obj.tanggal_rusak);
 			$("input[name='jenis_kerusakan']").val(obj.jenis_kerusakan);
 			$("input[name='keterangan']").val(obj.keterangan);
-			$("#imgready").html("<img id='imgupload' height='100%' src='"+dataSaved[i].imgUri+"'>");
+			$("#imgready").html("<img id='imgupload' width='100%' src='"+dataSaved[i].imgUri+"'>");
 			break;
 		}
 	}
@@ -193,11 +193,11 @@ function getDataGantimeter(){
 	obj.nama = $("input[name='nama']").val();
 	obj.alamat = $("input[name='alamat']").val();
 	obj.daya = $("input[name='daya']").val();
-	obj.no_meter = $("input[name='no_meter_lama']").val();
-	obj.no_meter = $("input[name='no_meter_baru']").val();
-	obj.merk_meter = $("input[name='merk_meter_lama']").val();
-	obj.merk_meter = $("input[name='merk_meter_baru']").val();
-	obj.tanggal_rusak = $("input[name='tanggal_ganti']").val();
+	obj.no_meter_lama = $("input[name='no_meter_lama']").val();
+	obj.no_meter_baru = $("input[name='no_meter_baru']").val();
+	obj.merk_meter_lama = $("input[name='merk_meter_lama']").val();
+	obj.merk_meter_baru = $("input[name='merk_meter_baru']").val();
+	obj.tanggal_ganti = $("input[name='tanggal_ganti']").val();
 	obj.jenis_kerusakan = $("select[name='jenis_kerusakan']").val();
 	obj.keterangan = $("input[name='keterangan']").val();
 	return obj;
