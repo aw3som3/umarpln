@@ -1,0 +1,173 @@
+<!-- We don't need a full layout in this file because this page will be parsed with Ajax. -->
+
+<!-- Top Navbar-->
+<div class="navbar">
+    <div class="navbar-inner">
+        <div class="left">
+            <a href="#" class="back link">
+                <i class="icon icon-back"></i>
+                <span>Back</span>
+            </a>
+        </div>
+        <div class="center sliding">Gangguan Prabayar</div>
+        <div class="right">
+            <a href="#" class="link icon-only open-panel"><i class="icon icon-bars"></i></a>
+        </div>
+    </div>
+</div>
+<div class="pages">
+    <div data-page="pascabayar" class="page">
+        <div class="page-content">
+            <div class="content-block">
+                <div class="list-block">
+				  <ul>
+					<li>
+					  <div class="item-content">
+						
+						<div class="item-inner">
+						  <div class="item-title label">Id</div>
+						  <div class="item-input">
+						  <input type="hidden" name="prapasca" value="pascabayar">
+							  <input type="text" name="id_pelanggan" placeholder="id pelanggan">
+						  </div>
+						</div>
+					  </div>
+					</li>
+					
+					<li>
+					  <div class="item-content">
+						
+						<div class="item-inner">
+						  <div class="item-title label">Nama</div>
+						  <div class="item-input">
+							  <input type="text" name="nama"  placeholder="nama pelanggan">
+						  </div>
+						</div>
+					  </div>
+					</li>
+					
+					<li>
+					  <div class="item-content">
+						
+						<div class="item-inner">
+						  <div class="item-title label">Alamat</div>
+						  <div class="item-input">
+							  <input type="text" name="alamat"  placeholder="alamat">
+						  </div>
+						</div>
+					  </div>
+					</li>
+					
+					<li>
+					  <div class="item-content">
+						
+						<div class="item-inner">
+						  <div class="item-title label">Daya</div>
+						  <div class="item-input">
+							  <input type="text" name="daya"  placeholder="daya">
+						  </div>
+						</div>
+					  </div>
+					</li>
+					
+					<li>
+					  <div class="item-content">
+						
+						<div class="item-inner">
+						  <div class="item-title label">No Meter</div>
+						  <div class="item-input">
+							  <input type="text" name="no_meter"  placeholder="nomor meter">
+						  </div>
+						</div>
+					  </div>
+					</li>
+					
+					<li>
+					  <div class="item-content">
+						
+						<div class="item-inner">
+						  <div class="item-title label">Merk Meter</div>
+						  <div class="item-input">
+							  <input type="text" name="merk_meter"  placeholder="merk meter">
+						  </div>
+						</div>
+					  </div>
+					</li>
+					
+					<li>
+					  <div class="item-content">
+						
+						<div class="item-inner">
+						  <div class="item-title label">Tanggal Rusak</div>
+						  <div class="item-input">
+							  <input type="date" name="tanggal_rusak">
+						  </div>
+						</div>
+					  </div>
+					</li>
+					
+					<li>
+					  <div class="item-content">
+						
+						<div class="item-inner">
+						  <div class="item-title label">Jenis Kerusakan</div>
+						  <div class="item-input">
+							  <select name="jenis_kerusakan">
+									<option value="Meter Macet">Meter Macet</option>
+									<option value="Meter Buram">Meter Buram</option>
+									<option value="Terminal kWh Terbakar">Terminal kWh Terbakar</option>
+									<option value="Putaran kWh Terbalik">Putaran kWh Terbalik</option>
+									<option value="kWh Meter tidak keluar Tegangan">kWh Meter tidak keluar Tegangan</option>
+									<option value="Permasalahan Instalasi Pelanggan">Permasalahan Instalasi Pelanggan</option>
+									<option value="Lain-lain">Lain-lain</option>
+							  </select>
+						  </div>
+						</div>
+					  </div>
+					</li>
+					
+					
+					
+					<li>
+					  <div class="item-content">
+						
+						<div class="item-inner">
+						  <div class="item-title label">Keterangan</div>
+						  <div class="item-input">
+							  <input type="text" name="keterangan">
+						  </div>
+						</div>
+					  </div>
+					</li>
+				  </ul>
+				</div> 
+				<div id="photo" class="center">
+					<p>Foto Meter</p>
+					<div id="imgready">
+						<img src="./img/default-image.png" id="imgupload" width="100%">
+					</div>
+				</div>
+				
+				<div class="content-block">
+					<div class="row">
+						<div class="col-50 center">
+							<a href="#" id="simpan" class="button button-big button-fill color-green button-center">SIMPAN</a>
+						</div>
+						<div class="col-50 center">
+							<a href="#" id="kirim" class="button button-big button-fill color-blue button-center">KIRIM</a>
+						</div>
+					</div>
+					<div class="a"><br/></div>
+					<div class="row">
+						<div class="col-100 center">
+							<a href="tindakan.html"  class="button button-big button-fill color-green button-center">TINDAKAN</a>
+						</div>
+					</div>
+					
+				</div>					
+				
+            </div>
+        </div>
+    </div>
+</div>
+

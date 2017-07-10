@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "1039320411904",
+    "firebase_url": "https://plnumar-b3b20.firebaseio.com",
+    "project_id": "plnumar-b3b20",
+    "storage_bucket": "plnumar-b3b20.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1039320411904:android:d99d4f7b65c0aeee",
+        "android_client_info": {
+          "package_name": "com.plnumar.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1039320411904-uokl9mknjoci4rdvmu1mrp8ush2kn6to.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA8qpTgCJIQFE8vT_KOZGXW5OWsxP4g_LE"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

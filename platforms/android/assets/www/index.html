@@ -43,6 +43,15 @@
 		button.button-center{
 		  margin:auto !important;
 		}
+		#imgready{
+			border:1px solid #777;
+			width:100%;
+		}
+		#imgready2{
+			border:1px solid #777;
+			width:100%;
+		}
+		
 	
 	</style>
 	
@@ -70,13 +79,9 @@
                 <div class="navbar-inner">
                     <!-- We need cool sliding animation on title element, so we have additional "sliding" class -->
                     <div class="center sliding">Monitoring PLN</div>
-                    <div class="right">
-                        <!--
-                          Right link contains only icon - additional "icon-only" class
-                          Additional "open-panel" class tells app to open panel when we click on this link
-                        -->
+                    <!--<div class="right">
                         <a href="#" class="link icon-only open-panel"><i class="icon icon-bars"></i></a>
-                    </div>
+                    </div>-->
                 </div>
             </div>
             <!-- Pages container, because we use fixed-through navbar and toolbar, it has additional appropriate classes-->
@@ -100,19 +105,19 @@
 							</div>
 							<div class="row">
 								<div class="col-50 center">
-									<a href="about.html"><button class="button button-big button-fill color-green circle button-center"><i class="fa fa-lg fa-wrench"></i></button>
+									<a href="tersimpan.html"><button class="button button-big button-fill color-green circle button-center"><i class="fa fa-lg fa-save"></i></button>
 									<p>Tersimpan</p>
 									</a>
 								</div>
 								<div class="col-50 center">
-									<a href="pascabayar.html"><button class="button button-big button-fill color-blue circle button-center"><i class="fa fa-lg fa-wrench"></i></button>
+									<a href="download.html"><button class="button button-big button-fill color-blue circle button-center"><i class="fa fa-lg fa-download"></i></button>
 									<p>Download</p>
 									</a>
 								</div>
 							</div>
 							<div class="row">
 								<div class="col-50 center">
-									<a href="about.html"><button class="button button-big button-fill color-green circle button-center"><i class="fa fa-lg fa-wrench"></i></button>
+									<a href="gantimeter.html"><button class="button button-big button-fill color-green circle button-center"><i class="fa fa-lg fa-exchange"></i></button>
 									<p>Ganti Meter</p>
 									</a>
 								</div>
@@ -126,6 +131,11 @@
                     </div>
                 </div>
             </div>
+			
+			<div class="popup popup-loading">
+				<span style="width:42px; height:42px" class="preloader"></span>
+			</div>
+			
             <!-- Bottom Toolbar-->
             <!--<div class="toolbar">
                 <div class="toolbar-inner">
