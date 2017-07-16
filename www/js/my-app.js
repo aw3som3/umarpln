@@ -23,14 +23,14 @@ var mainView = myApp.addView('.view-main', {
 $$(document).on('deviceready', function() {
     console.log("Device is ready!");
 	
-	
-	FCMPlugin.onTokenRefresh(function(token){
-		console.log(token);
-	});
-	FCMPlugin.onNotification(function(data){
-		console.log(data);
-	});
-	
+	//if (typeof FCMPlugin != 'undefined') {
+	//	FCMPlugin.onTokenRefresh(function(token){
+	//		console.log(token);
+	//	});
+	//	FCMPlugin.onNotification(function(data){
+	//		console.log(data);
+	//	});
+	//}
 	
 	$(document).ready(function (){
         console.log("jquery ready");
@@ -190,7 +190,7 @@ function loadDataFromFile(){
 function getDataTindakan(){
 	var obj = new Object();
 	obj.id = uuidUsed;
-	obj.tindakan = $("input[name='tindakan']").val();
+	obj.tindakan = $("select[name='tindakan']").val();
 	return obj;
 }
 function getDataProblem(type){

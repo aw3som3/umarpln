@@ -23,6 +23,15 @@ var mainView = myApp.addView('.view-main', {
 $$(document).on('deviceready', function() {
     console.log("Device is ready!");
 	
+	//if (typeof FCMPlugin != 'undefined') {
+	//	FCMPlugin.onTokenRefresh(function(token){
+	//		console.log(token);
+	//	});
+	//	FCMPlugin.onNotification(function(data){
+	//		console.log(data);
+	//	});
+	//}
+	
 	$(document).ready(function (){
         console.log("jquery ready");
 		if(localStorage.dataSaved!==undefined)
@@ -31,6 +40,19 @@ $$(document).on('deviceready', function() {
 			dataSavedTindakan = JSON.parse(localStorage.dataSavedTindakan);
 		if(localStorage.dataSavedGantimeter!==undefined)
 			dataSavedGantimeter = JSON.parse(localStorage.dataSavedGantimeter);
+		
+		
+		$("#login").click(function(){
+			console.log("do login");
+			doLogin();
+		});
+		
+		if(localStorage.dataLogin!==undefined){
+			if((JSON.parse(localStorage.dataLogin))[0].role==="pl"){
+				$("#hide_pl").hide();
+			};
+		}
+		
     });	
 });
 
@@ -266,12 +288,69 @@ function downloadDataGantimeter(){
 		alert( "error" );
 	})
 }
+function doLogin(){
+	var _username = $("input[name='username']").val();
+	var _password = $("input[name='password']").val();
+	var jqxhr = $.post( "http://gamerspace.us/index.php/c_login/login/",{ username:_username, password: _password }, function() {
+		
+	})
+	.done(function(data) {
+		
+		if(data.error!==undefined){
+			alert("wrong username or password");
+		}else{
+			localStorage.dataLogin = JSON.stringify(data);
+			window.location = "index2.html";
+		}
+	})
+	.fail(function() {
+		alert( "network error" );
+	})
+}
 
-
+function previewSendCt(){
+	var jqxhr = $.get( "http://gamerspace.us/index.php/c_gangguan/get_gangguan_by_id/"+uuidUsed, function() {
+		
+	})
+	.done(function(data) {
+		console.log(data);
+		
+		var obj = data[0];
+		if(obj.tindakan===null)obj.tindakan="";
+			var str = ""
+			+"tipe = "+obj.pra_pasca
+			+"<br/>id_pelanggan =   "+obj.id_pelanggan
+			+"<br/>nama = "+obj.nama
+			+"<br/>alamat = "+obj.alamat
+			+"<br/>daya = "+obj.daya
+			+"<br/>no_meter = "+obj.no_meter
+			+"<br/>merk_meter = "+obj.merk_meter
+			+"<br/>tanggal_rusak = "+obj.tanggal_rusak
+			+"<br/>jenis_kerusakan = "+obj.jenis_kerusakan
+			+"<br/>keterangan = "+obj.keterangan
+			+"<br/>tindakan = "+obj.tindakan
+			+"<div class='row'>"
+			+"<div id='img_problem' class='col-50 center'>"
+			+"<p>problem</p>"
+			+"<img style='width:100%' src='http://www.gamerspace.us/img/"+obj.pra_pasca+"_"+obj.id+".jpg'>"
+			+"</div>"
+			+"<div id='img_tindakan' class='col-50 center'>"
+			+"<p>solved</p>"
+			+"<img style='width:100%' src='http://www.gamerspace.us/img/tindakan_"+obj.id+".jpg'>"
+			+"</div>"
+			+"</div>"
+			$("#itemdetail").html(str);
+	})
+	.fail(function() {
+		alert( "network error" );
+	});
+}
 function previewData(id){
+	uuidUsed = id;
 	for(var i=0;i<dataDownloaded.length;i++){
 		if(dataDownloaded[i].id===id){
 			var obj = dataDownloaded[i];
+			if(obj.tindakan===null)obj.tindakan="";
 			var str = ""
 			+"tipe = "+obj.pra_pasca
 			+"<br/>id_pelanggan =   "+obj.id_pelanggan
@@ -332,13 +411,59 @@ function previewDataGantimeter(id){
 	}
 }
 
+function loadCt(){
+	var jqxhr = $.get( "http://gamerspace.us/index.php/c_ct/get_ct_by_id/"+uuidUsed, function() {
+		
+	})
+	.done(function(data) {
+		$("#ct_text").html(data[0].ct_code);
+	})
+	.fail(function() {
+		alert( "network error" );
+	});
+}
+function sendCt(){
+	var _id = uuidUsed;
+	var _ct = $("input[name='ct_code']").val();
+	var data = { id:_id, ct_code: _ct };
+	console.log(data);
+	var jqxhr = $.post( "http://gamerspace.us/index.php/c_ct/insert_ct/",data, function() {
+		
+	})
+	.done(function(data) {
+		console.log(data);
+		alert("ct send");
+	})
+	.fail(function() {
+		alert( "network error" );
+	})
+}
+
+function loadNeedCt(){
+	console.log("load need ct begin");
+	var jqxhr = $.get( "http://gamerspace.us/index.php/c_ct/need_ct_list/", function() {
+		
+	})
+	.done(function(data) {
+		console.log("load need ct done");
+		$("#needctlist").html("");
+		for(var i=0;i<data.length;i++){
+			$("#needctlist").append("<a href='sendct.html?id="+data[i].id+"'><li class='item-content' id='"+data[i].id+"'>need ct | id.pel : "+data[i].id_pelanggan+"</li>");
+		}
+	})
+	.fail(function() {
+		alert( "network error" );
+	});
+}
 
 // Now we need to run the code that will be executed only for About page.
 
 // Option 1. Using page callback for page (for "about" page in this case) (recommended way):
-myApp.onPageInit('about', function (page) {
-    // Do something here for "about" page
-
+myApp.onPageInit('login', function (page) {
+	console.log("login page");
+})
+myApp.onPageInit('index', function (page) {
+	console.log("index page");
 })
 
 // Option 2. Using one 'pageInit' event handler for all pages:
@@ -346,8 +471,13 @@ $$(document).on('pageBeforeAnimation', function (e) {
     // Get page data from event data
     var page = e.detail.page;
 	console.log(page);
+	
 	if(page.name === 'index'){
 		loadFromFile = false;
+		console.log("index nih");
+		if((JSON.parse(localStorage.dataLogin))[0].role==="pl"){
+			$("#hide_pl").hide();
+		};
 	}
     if (page.name === 'prabayar') {
 		if(!loadFromFile){
@@ -365,6 +495,8 @@ $$(document).on('pageBeforeAnimation', function (e) {
 		$("#simpan").click(function(){
 			saveDataProblem("prabayar")
 		});
+		
+		loadCt();
     }
 	if (page.name === 'pascabayar') {
 		if(!loadFromFile){
@@ -382,6 +514,9 @@ $$(document).on('pageBeforeAnimation', function (e) {
 		$("#simpan").click(function(){
 			saveDataProblem("pascabayar")
 		});
+		
+		loadCt();
+		
     }
 	if(page.name === 'tersimpan'){
 		loadFromFile = true;
@@ -442,6 +577,16 @@ $$(document).on('pageBeforeAnimation', function (e) {
 			saveDataGantimeter()
 		});
     }
+	if (page.name === 'sendct') {
+		uuidUsed = page.query.id;
+		previewSendCt();
+		$("#send_ct").click(function(){
+			sendCt();
+		});
+	}
+	if (page.name === 'needct') {
+		loadNeedCt();
+	}
 	
 })
 

@@ -23,6 +23,15 @@ var mainView = myApp.addView('.view-main', {
 $$(document).on('deviceready', function() {
     console.log("Device is ready!");
 	
+	//if (typeof FCMPlugin != 'undefined') {
+	//	FCMPlugin.onTokenRefresh(function(token){
+	//		console.log(token);
+	//	});
+	//	FCMPlugin.onNotification(function(data){
+	//		console.log(data);
+	//	});
+	//}
+	
 	$(document).ready(function (){
         console.log("jquery ready");
 		if(localStorage.dataSaved!==undefined)
