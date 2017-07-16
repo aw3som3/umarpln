@@ -1,0 +1,111 @@
+<!-- We don't need a full layout in this file because this page will be parsed with Ajax. -->
+
+<!-- Top Navbar-->
+<div class="navbar">
+    <div class="navbar-inner">
+        <div class="left">
+            <a href="#" class="back link">
+                <i class="icon icon-back"></i>
+                <span>Back</span>
+            </a>
+        </div>
+        <div class="center sliding">Download Data</div>
+        <div class="right">
+            <a href="#" class="link icon-only open-panel"><i class="icon icon-bars"></i></a>
+        </div>
+    </div>
+</div>
+
+<div class="pages">
+    <div data-page="download_excel" class="page">
+        <div class="page-content">
+            <div class="content-block">
+				<div class="buttons-row">
+				  <a href="#tab1" class="tab-link active button">Gangguan</a>
+				  <a href="#tab2" class="tab-link button">Ganti Meter</a>
+				</div>
+            </div>
+			
+			<div class="tabs">
+	<div id="tab1" class="tab active">
+			
+			
+                <div class="list-block">
+				  <ul>
+					<li>
+					  <div class="item-content">
+						<div class="item-inner">
+						  <div class="item-title label">dari tanggal</div>
+						  <div class="item-input">
+							  <input type="date" name="e_datemin" placeholder="id pelanggan">
+						  </div>
+						</div>
+					  </div>
+					</li>
+					
+					<li>
+					  <div class="item-content">
+						
+						<div class="item-inner">
+						  <div class="item-title label">sampai tanggal</div>
+						  <div class="item-input">
+							  <input type="date" name="e_datemax"  placeholder="nama pelanggan">
+						  </div>
+						</div>
+					  </div>
+					</li>
+				  </ul>
+				</div>
+				
+				<a href="#" id="e_download" class="button button-big button-fill color-green button-center">DOWNLOAD</a>
+			<div class="list-block">
+			  <ul id="downloaded">
+				
+			  </ul>
+			</div>
+				
+	</div>
+	<div id="tab2" class="tab">
+			
+			
+                <div class="list-block">
+				  <ul>
+					<li>
+					  <div class="item-content">
+						<div class="item-inner">
+						  <div class="item-title label">dari tanggal</div>
+						  <div class="item-input">
+							  <input type="date" name="e_datemin2" placeholder="id pelanggan">
+						  </div>
+						</div>
+					  </div>
+					</li>
+					
+					<li>
+					  <div class="item-content">
+						
+						<div class="item-inner">
+						  <div class="item-title label">sampai tanggal</div>
+						  <div class="item-input">
+							  <input type="date" name="e_datemax2"  placeholder="nama pelanggan">
+						  </div>
+						</div>
+					  </div>
+					</li>
+				  </ul>
+				</div>
+				
+				
+				<a href="#" id="e_download2" class="button button-big button-fill color-green button-center">DOWNLOAD</a>
+			<div class="list-block">
+			  <ul id="downloaded2">
+				
+			  </ul>
+			</div>
+	</div>
+</div>
+			
+        </div>
+    </div>
+</div>
+

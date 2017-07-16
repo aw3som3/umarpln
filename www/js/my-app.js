@@ -75,7 +75,23 @@ function onFail(message) {
 	alert('Failed because: ' + message);
 }
 function sendDataProblem(type){
+	
 	myApp.popup('.popup-loading');
+	
+	//saving
+	
+	var params = getDataProblem(type);
+	var imgUri = $("#imgupload").attr("src");
+	var data = {
+		params:params,
+		imgUri:imgUri
+	};
+	dataSaved.push(data);
+	localStorage.dataSaved = JSON.stringify(dataSaved);
+	
+	//end saving
+	
+	
 	var imgUri = $("#imgupload").attr("src");
 	var options = new FileUploadOptions();
 	var ext = imgUri.split(".").pop();
@@ -89,6 +105,21 @@ function sendDataProblem(type){
 }
 function sendDataTindakan(){
 	myApp.popup('.popup-loading');
+	
+	//saving
+	
+	var params = getDataTindakan();
+	var imgUri = $("#imgupload").attr("src");
+	var data = {
+		params:params,
+		imgUri:imgUri
+	};
+	dataSavedTindakan.push(data);
+	localStorage.dataSavedTindakan = JSON.stringify(dataSavedTindakan);
+	myApp.closeModal(".popup-loading");
+	
+	//
+	
 	var imgUri = $("#imgupload2").attr("src");
 	var options = new FileUploadOptions();
 	var ext = imgUri.split(".").pop();
@@ -130,6 +161,22 @@ function saveDataGantimeter(){
 }
 function sendDataGantimeter(){
 	myApp.popup('.popup-loading');
+	
+	//saving
+	
+	var params = getDataGantimeter();
+	var imgUri = $("#imgupload").attr("src");
+	var imgUri2 = $("#imgupload2").attr("src");
+	var data = {
+		params:params,
+		imgUri:imgUri,
+		imgUri2:imgUri2
+	};
+	dataSavedGantimeter.push(data);
+	localStorage.dataSavedGantimeter = JSON.stringify(dataSavedGantimeter);
+	
+	//
+	
 	var imgUri = $("#imgupload").attr("src");
 	var options = new FileUploadOptions();
 	var ext = imgUri.split(".").pop();
@@ -268,6 +315,20 @@ function downloadData(){
 	.fail(function() {
 		alert( "error" );
 	})
+}
+function e_downloadData(){
+	myApp.popup('.popup-loading');
+	var datemin = $("input[name='e_datemin']").val();
+	var datemax = $("input[name='e_datemax']").val();
+	window.open("http://gamerspace.us/index.php/c_gangguan/get_gangguan_download_csv/"+datemin+"/"+datemax,"_self");
+	myApp.closeModal(".popup-loading");
+}
+function e_downloadDataGantimeter(){
+	myApp.popup('.popup-loading');
+	var datemin = $("input[name='datemin2']").val();
+	var datemax = $("input[name='datemax2']").val();
+	window.open("http://gamerspace.us/index.php/c_gangguan/get_penggantian_download_csv/"+datemin+"/"+datemax,"_self");
+	myApp.closeModal(".popup-loading");
 }
 function downloadDataGantimeter(){
 	myApp.popup('.popup-loading');
@@ -548,6 +609,14 @@ $$(document).on('pageBeforeAnimation', function (e) {
 		});
 		$("#download2").click(function(){
 			downloadDataGantimeter();
+		});
+	}
+	if(page.name === 'download_excel'){
+		$("#e_download").click(function(){
+			e_downloadData();
+		});
+		$("#e_download2").click(function(){
+			e_downloadDataGantimeter();
 		});
 	}
 	if(page.name === 'resume'){
