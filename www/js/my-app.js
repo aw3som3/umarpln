@@ -46,8 +46,14 @@ $$(document).on('deviceready', function() {
 			console.log("do login");
 			doLogin();
 		});
+		$("#_logout").click(function(){
+			localStorage.dataLogin = null;
+			window.location = "index.html";
+			
+		});
 		
 		if(localStorage.dataLogin!==undefined){
+			$("#_username").html((JSON.parse(localStorage.dataLogin))[0].username);
 			if((JSON.parse(localStorage.dataLogin))[0].role==="pl"){
 				$("#hide_pl").hide();
 			};

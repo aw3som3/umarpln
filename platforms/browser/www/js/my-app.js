@@ -46,8 +46,14 @@ $$(document).on('deviceready', function() {
 			console.log("do login");
 			doLogin();
 		});
+		$("#_logout").click(function(){
+			localStorage.dataLogin = null;
+			window.location = "index.html";
+			
+		});
 		
 		if(localStorage.dataLogin!==undefined){
+			$("#_username").html((JSON.parse(localStorage.dataLogin))[0].username);
 			if((JSON.parse(localStorage.dataLogin))[0].role==="pl"){
 				$("#hide_pl").hide();
 			};
@@ -321,12 +327,14 @@ function e_downloadData(){
 	var datemin = $("input[name='e_datemin']").val();
 	var datemax = $("input[name='e_datemax']").val();
 	window.open("http://gamerspace.us/index.php/c_gangguan/get_gangguan_download_csv/"+datemin+"/"+datemax,"_self");
+	myApp.closeModal(".popup-loading");
 }
 function e_downloadDataGantimeter(){
 	myApp.popup('.popup-loading');
 	var datemin = $("input[name='datemin2']").val();
 	var datemax = $("input[name='datemax2']").val();
 	window.open("http://gamerspace.us/index.php/c_gangguan/get_penggantian_download_csv/"+datemin+"/"+datemax,"_self");
+	myApp.closeModal(".popup-loading");
 }
 function downloadDataGantimeter(){
 	myApp.popup('.popup-loading');

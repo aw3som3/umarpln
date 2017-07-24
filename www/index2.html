@@ -51,6 +51,13 @@
 			border:1px solid #777;
 			width:100%;
 		}
+		.page-content{
+			background-color:#00bcd4;
+		}
+		.navbar{
+			background-color:#006774;
+			color:white;
+		}
 		
 	
 	</style>
@@ -66,8 +73,20 @@
     <!-- Left panel with reveal effect-->
     <div class="panel panel-left panel-reveal">
         <div class="content-block">
-            <p>Left panel content goes here</p>
-        </div>
+			<div class="row" style="margin:20px 0"><div class="col-100 center">Logged in as <b><i><div id="_username"></div></i></b></div></div>
+			
+			<div class="row">
+				<div class="col-100 center">
+					<i class="fa fa-user-circle fa-6" aria-hidden="true" style="font-size:50vw"></i>
+				</div>
+			</div>
+			
+			<div class="row" style="margin:20px 0">
+				<div class="col-100 center">
+					<a href="#" id="_logout" class="button button-big button-fill color-red button-center">Logout</a>
+				</div>
+			</div>
+		</div>
     </div>
 
     <!-- Views -->
@@ -79,9 +98,9 @@
                 <div class="navbar-inner">
                     <!-- We need cool sliding animation on title element, so we have additional "sliding" class -->
                     <div class="center sliding">Monitoring PLN</div>
-                    <!--<div class="right">
+                    <div class="right">
                         <a href="#" class="link icon-only open-panel"><i class="icon icon-bars"></i></a>
-                    </div>-->
+                    </div>
                 </div>
             </div>
             <!-- Pages container, because we use fixed-through navbar and toolbar, it has additional appropriate classes-->
