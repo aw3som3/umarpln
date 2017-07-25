@@ -693,7 +693,7 @@ function drawStat(_data){
 	var bln = ["JAN","FEB","MAR","APR","MAY","JUN","JUL","AGU","SEP","OKT","NOV","DES"];
 	var data = [];
 	for(var i=0;i<_data.length;i++){
-		var _temp = [bln[_data[i].bulan],_data[i].jumlah];
+		var _temp = [bln[_data[i].bulan-1],_data[i].jumlah];
 		data.push(_temp);
 	}
 
